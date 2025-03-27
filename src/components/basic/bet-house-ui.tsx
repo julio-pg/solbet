@@ -64,7 +64,7 @@ export default function MemoryGame() {
   }
   const { initializeContractPool } = useBetHouseProgram()
 
-  function handleSubmit() {
+  async function handleSubmit() {
     initializeContractPool.mutateAsync()
   }
   return (

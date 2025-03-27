@@ -10,7 +10,9 @@ describe('Test Bet House', () => {
   const wallet = provider.wallet as anchor.Wallet
   anchor.setProvider(provider)
   const program = anchor.workspace.BetHouse as Program<BetHouse>
-
+  beforeAll(() => {
+    console.log(program.programId.toBase58())
+  })
   it('Initlialize', async () => {
     const [poolAccount, poolBump] = await anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from('pool', 'utf8')],
