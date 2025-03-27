@@ -1,0 +1,179 @@
+{
+  "address": "7znntp5GpKkQBJSXKR7jkE78b2wTXGHSvhnanCxeEREo",
+  "metadata": {
+    "name": "bet_house",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "initialize_contract_pool",
+      "discriminator": [
+        41,
+        11,
+        239,
+        155,
+        252,
+        7,
+        124,
+        205
+      ],
+      "accounts": [
+        {
+          "name": "pool_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "place_bet",
+      "docs": [
+        "Users place a bet by transferring tokens to the contract pool."
+      ],
+      "discriminator": [
+        222,
+        62,
+        67,
+        220,
+        63,
+        166,
+        126,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "resolve_bet",
+      "docs": [
+        "Resolves a bet, transferring a reward to the user if they win."
+      ],
+      "discriminator": [
+        137,
+        132,
+        33,
+        97,
+        48,
+        208,
+        30,
+        159
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pool_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "win",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PoolAccount",
+      "discriminator": [
+        116,
+        210,
+        187,
+        119,
+        196,
+        196,
+        52,
+        137
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Unauthorized action."
+    }
+  ],
+  "types": [
+    {
+      "name": "PoolAccount",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    }
+  ]
+}

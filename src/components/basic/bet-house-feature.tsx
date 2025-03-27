@@ -2,12 +2,12 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { ExplorerLink } from '../cluster/cluster-ui'
 import { WalletButton } from '../solana/solana-provider'
 import { AppHero, ellipsify } from '../ui/ui-layout'
-import { useBasicProgram } from './basic-data-access'
-import { BasicCreate, BasicProgram } from './basic-ui'
+import { useBetHouseProgram } from './bet-house-data-access'
+import MemoryGame from './bet-house-ui'
 
 export default function BasicFeature() {
   const { publicKey } = useWallet()
-  const { programId } = useBasicProgram()
+  const { programId } = useBetHouseProgram()
 
   return publicKey ? (
     <div>
@@ -15,9 +15,8 @@ export default function BasicFeature() {
         <p className="mb-6">
           <ExplorerLink path={`account/${programId}`} label={ellipsify(programId.toString())} />
         </p>
-        <BasicCreate />
+        <MemoryGame />
       </AppHero>
-      <BasicProgram />
     </div>
   ) : (
     <div className="max-w-4xl mx-auto">

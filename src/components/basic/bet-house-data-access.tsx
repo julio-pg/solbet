@@ -7,7 +7,7 @@ import { useCluster } from '../cluster/cluster-data-access'
 import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../ui/ui-layout'
 
-export function useBasicProgram() {
+export function useBetHouseProgram() {
   const { connection } = useConnection()
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
@@ -15,13 +15,13 @@ export function useBasicProgram() {
   const program = getBasicProgram(provider)
 
   const getProgramAccount = useQuery({
-    queryKey: ['get-program-account', { cluster }],
+    queryKey: ['betHouse', { cluster }],
     queryFn: () => connection.getParsedAccountInfo(programId),
   })
 
-  const greet = useMutation({
-    mutationKey: ['basic', 'greet', { cluster }],
-    mutationFn: () => program.methods.greet().rpc(),
+  const initializeContractPool = useMutation({
+    mutationKey: ['betHouse', 'initialize', { cluster }],
+    mutationFn: () => program.methods.initializeContractPool().rpc(),
     onSuccess: (signature) => {
       transactionToast(signature)
     },
@@ -32,6 +32,6 @@ export function useBasicProgram() {
     program,
     programId,
     getProgramAccount,
-    greet,
+    initializeContractPool,
   }
 }
