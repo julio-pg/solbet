@@ -9,6 +9,10 @@ import { useTransactionToast } from '../ui/ui-layout'
 import { web3 } from '@coral-xyz/anchor'
 import { PublicKey } from '@solana/web3.js'
 
+interface ResolveBetArgs {
+  win: boolean
+}
+
 export function useBetHouseProgram() {
   const { connection } = useConnection()
   const { cluster } = useCluster()
@@ -22,6 +26,11 @@ export function useBetHouseProgram() {
   const getProgramAccount = useQuery({
     queryKey: ['betHouse', { cluster }],
     queryFn: () => connection.getParsedAccountInfo(programId),
+  })
+
+  const getPoolAccount = useQuery({
+    queryKey: ['betHouse', 'poolAccount', { cluster }],
+    queryFn: () => program.account.poolAccount.all(),
   })
 
   const initializeContractPool = useMutation({
@@ -43,11 +52,52 @@ export function useBetHouseProgram() {
       toast.error('Failed to run program')
     },
   })
+  const placeBet = useMutation({
+    mutationKey: ['betHouse', 'placeBet', { cluster }],
+    mutationFn: () =>
+      program.methods
+        .placeBet()
+        .accounts({
+          //@ts-ignore
+          poolAccount: poolAccount,
+          signer: publicKey!,
+          systemProgram: web3.SystemProgram.programId,
+        })
+        .rpc(),
+    onSuccess: (signature) => {
+      transactionToast(signature)
+    },
+    onError: () => {
+      toast.error('Failed to run program')
+    },
+  })
+  const resolveBet = useMutation<string, Error, ResolveBetArgs>({
+    mutationKey: ['betHouse', 'resolveBet', { cluster }],
+    mutationFn: ({ win }) =>
+      program.methods
+        .resolveBet(win)
+        .accounts({
+          //@ts-ignore
+          poolAccount: poolAccount,
+          signer: publicKey!,
+          systemProgram: web3.SystemProgram.programId,
+        })
+        .rpc(),
+    onSuccess: (signature) => {
+      transactionToast(signature)
+    },
+    onError: () => {
+      toast.error('Failed to run program')
+    },
+  })
 
   return {
     program,
     programId,
     getProgramAccount,
     initializeContractPool,
+    placeBet,
+    resolveBet,
+    getPoolAccount,
   }
 }

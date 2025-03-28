@@ -13,7 +13,7 @@ describe('Test Bet House', () => {
   beforeAll(() => {
     console.log(program.programId.toBase58())
   })
-  it('Initlialize', async () => {
+  it('Initialize', async () => {
     const [poolAccount, poolBump] = await anchor.web3.PublicKey.findProgramAddressSync(
       [Buffer.from('pool', 'utf8')],
       program.programId,

@@ -11,7 +11,7 @@ const DashboardFeature = lazy(() => import('../components/dashboard/dashboard-fe
 const links: { label: string; path: string }[] = [
   { label: 'Account', path: '/account' },
   { label: 'Clusters', path: '/clusters' },
-  { label: 'Basic Program', path: '/basic' },
+  { label: 'Memory Game', path: '/basic' },
 ]
 
 const routes: RouteObject[] = [
